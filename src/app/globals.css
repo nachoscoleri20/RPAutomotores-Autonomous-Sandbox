@@ -1,0 +1,367 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "lenis/dist/lenis.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==========================================================================
+   Roport Automotores — Design System (Gate 1A)
+   Valores muestreados de los bocetos aprobados; ver docs/03-design-system.md
+   ========================================================================== */
+
+:root {
+  /* Marca */
+  --rp-red: #d6151d; /* CTA principal (boceto 01, botón "Ver catálogo") */
+  --rp-red-deep: #be0f1c; /* extremo oscuro del degradado del CTA */
+  --rp-red-bright: #ee2a31; /* hover / acentos sobre fondo oscuro */
+  --rp-red-glow: rgb(214 21 29 / 0.35);
+
+  /* Fondos y superficies (de oscuro a claro) */
+  --rp-black: #0a0b0d; /* cabecera / base */
+  --rp-bg: #0e1114; /* fondo de página y footer */
+  --rp-surface: #131518; /* paneles / secciones */
+  --rp-card: #1a1c20; /* tarjetas */
+  --rp-card-hi: #23252a; /* tarjeta elevada / hover */
+
+  /* Bordes */
+  --rp-border: rgb(255 255 255 / 0.1);
+  --rp-border-strong: rgb(255 255 255 / 0.22);
+
+  /* Texto */
+  --rp-white: #ffffff;
+  --rp-text: #f4f4f5;
+  --rp-text-muted: #a3a7ae; /* ≥7:1 sobre --rp-bg */
+  --rp-text-dim: #7d828a; /* solo texto grande / decorativo */
+
+  /* Estados (para paneles; bocetos 02 y 03) */
+  --rp-success: #22c55e;
+  --rp-info: #3b82f6;
+  --rp-warning: #d9a21b;
+
+  /* Radios */
+  --rp-radius-card: 1rem;
+  --rp-radius-panel: 1.25rem;
+  --rp-radius-pill: 999px;
+
+  /* Sombras */
+  --rp-shadow-card: 0 10px 30px -12px rgb(0 0 0 / 0.7);
+  --rp-shadow-red: 0 8px 24px -8px var(--rp-red-glow);
+
+  /* Movimiento (Gate 2; ver docs/05-animation-system.md) */
+  --rp-ease: cubic-bezier(0.22, 1, 0.36, 1); /* ease-out expo suave: entradas y microinteracciones */
+  --rp-dur-fast: 150ms;
+  --rp-dur: 250ms;
+  --rp-dur-reveal: 750ms; /* revelados al hacer scroll */
+  --rp-reveal-y: 24px; /* desplazamiento vertical de los revelados */
+  --rp-stagger: 80ms; /* separación entre elementos escalonados */
+
+  /* Layout */
+  --rp-container: 80rem; /* 1280px */
+  --rp-gutter: clamp(1rem, 4vw, 2.5rem);
+  --rp-section-y: clamp(3rem, 7vw, 6rem);
+
+  /* Tokens shadcn → marca (la web es siempre oscura) */
+  --background: var(--rp-bg);
+  --foreground: var(--rp-text);
+  --card: var(--rp-card);
+  --card-foreground: var(--rp-text);
+  --popover: var(--rp-card);
+  --popover-foreground: var(--rp-text);
+  --primary: var(--rp-red);
+  --primary-foreground: var(--rp-white);
+  --secondary: var(--rp-card-hi);
+  --secondary-foreground: var(--rp-text);
+  --muted: var(--rp-surface);
+  --muted-foreground: var(--rp-text-muted);
+  --accent: var(--rp-card-hi);
+  --accent-foreground: var(--rp-text);
+  --destructive: #ef4444;
+  --border: var(--rp-border);
+  --input: var(--rp-border-strong);
+  --ring: var(--rp-red-bright);
+  --chart-1: var(--rp-red);
+  --chart-2: #d4d4d8;
+  --chart-3: #8b8f96;
+  --chart-4: #5b5f66;
+  --chart-5: #3a3d43;
+  --radius: 0.75rem;
+  --sidebar: var(--rp-black);
+  --sidebar-foreground: var(--rp-text);
+  --sidebar-primary: var(--rp-red);
+  --sidebar-primary-foreground: var(--rp-white);
+  --sidebar-accent: var(--rp-card-hi);
+  --sidebar-accent-foreground: var(--rp-text);
+  --sidebar-border: var(--rp-border);
+  --sidebar-ring: var(--rp-red-bright);
+}
+
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), var(--font-body), ui-sans-serif, sans-serif;
+
+  --color-rp-red: var(--rp-red);
+  --color-rp-red-deep: var(--rp-red-deep);
+  --color-rp-red-bright: var(--rp-red-bright);
+  --color-rp-black: var(--rp-black);
+  --color-rp-bg: var(--rp-bg);
+  --color-rp-surface: var(--rp-surface);
+  --color-rp-card: var(--rp-card);
+  --color-rp-card-hi: var(--rp-card-hi);
+  --color-rp-text-muted: var(--rp-text-muted);
+  --color-rp-success: var(--rp-success);
+  --color-rp-info: var(--rp-info);
+  --color-rp-warning: var(--rp-warning);
+
+  --radius-card: var(--rp-radius-card);
+  --radius-panel: var(--rp-radius-panel);
+  --shadow-card: var(--rp-shadow-card);
+  --shadow-red: var(--rp-shadow-red);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Escala tipográfica fluida (320 → 1440 px) */
+  --text-display: clamp(2.25rem, 1.4rem + 4vw, 4.25rem);
+  --text-h1: clamp(2rem, 1.3rem + 3vw, 3.5rem);
+  --text-h2: clamp(1.5rem, 1.1rem + 1.8vw, 2.25rem);
+  --text-h3: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    color-scheme: dark;
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--rp-red-bright);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .rp-container {
+    width: 100%;
+    max-width: var(--rp-container);
+    margin-inline: auto;
+    padding-inline: var(--rp-gutter);
+  }
+  .rp-section {
+    padding-block: var(--rp-section-y);
+  }
+  /* Titular de marca: cursiva en negrita (boceto 01) */
+  .rp-display {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: var(--text-display);
+    letter-spacing: -0.02em;
+  }
+  .rp-accent {
+    color: var(--rp-red);
+  }
+  /* Superficie tipo tarjeta */
+  .rp-card {
+    background: linear-gradient(
+      180deg,
+      var(--rp-card-hi) 0%,
+      var(--rp-card) 40%,
+      var(--rp-surface) 100%
+    );
+    border: 1px solid var(--rp-border);
+    border-radius: var(--rp-radius-card);
+    box-shadow: var(--rp-shadow-card);
+    transition: border-color var(--rp-dur) var(--rp-ease);
+  }
+  .rp-card:hover {
+    border-color: var(--rp-border-strong);
+  }
+}
+
+/* ==========================================================================
+   Sistema de animaciones (Gate 2) — docs/05-animation-system.md
+   Regla general: solo opacity / transform / clip-path; el estado final es
+   siempre el diseño aprobado. Todo vive dentro de `no-preference`.
+   ========================================================================== */
+
+/* Lenis controla el suavizado: el scroll nativo no debe sumar su propio smooth. */
+html.lenis {
+  scroll-behavior: auto;
+}
+
+/* Barrido de luz de la banda de financiación: invisible salvo durante su animación. */
+.rp-sweep {
+  opacity: 0;
+}
+
+@keyframes rp-hero-img {
+  from {
+    opacity: 0;
+    transform: scale(1.025);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes rp-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes rp-mask-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.45em, 0);
+    clip-path: inset(0 -0.3em 100% -0.3em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(-0.3em -0.3em -0.35em -0.3em);
+  }
+}
+@keyframes rp-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes rp-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-60%);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(60%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* --- 2A. Secuencia de entrada del hero (CSS puro: corre en el primer pintado, sin JS).
+     fill-mode `backwards`: al terminar no quedan transform/clip-path residuales. --- */
+  .rp-intro-img {
+    animation: rp-hero-img 1100ms var(--rp-ease) backwards;
+  }
+  .rp-intro-glow {
+    animation: rp-fade 1200ms var(--rp-ease) 300ms backwards;
+  }
+  .rp-intro {
+    animation: rp-rise 650ms var(--rp-ease) var(--intro-delay, 0ms) backwards;
+  }
+  .rp-intro-mask {
+    animation: rp-mask-rise 800ms var(--rp-ease) var(--intro-delay, 0ms) backwards;
+  }
+
+  /* --- 2B/2C/2D. Revelados al hacer scroll. El estado oculto solo existe con `.rp-anim`
+     (script inline previo al pintado); sin JS el contenido es visible. --- */
+  .rp-anim [data-reveal] {
+    --reveal-delay: calc(var(--i, 0) * var(--rp-stagger));
+    transition:
+      opacity var(--rp-dur-reveal) var(--rp-ease) var(--reveal-delay),
+      transform calc(var(--rp-dur-reveal) + 100ms) var(--rp-ease) var(--reveal-delay);
+  }
+  .rp-anim [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-y, var(--rp-reveal-y)), 0) scale(var(--reveal-scale, 1));
+  }
+  @media (min-width: 640px) {
+    .rp-anim [data-reveal] {
+      --reveal-delay: calc(var(--i-sm, var(--i, 0)) * var(--rp-stagger));
+    }
+  }
+  @media (min-width: 1024px) {
+    .rp-anim [data-reveal] {
+      --reveal-delay: calc(var(--i-lg, var(--i-sm, var(--i, 0))) * var(--rp-stagger));
+    }
+  }
+
+  /* Luz roja de la banda de financiación: aparece después del revelado de la tarjeta. */
+  .rp-anim [data-reveal] .rp-reveal-glow {
+    transition: opacity 1200ms var(--rp-ease) 350ms;
+  }
+  .rp-anim [data-reveal]:not([data-revealed]) .rp-reveal-glow {
+    opacity: 0;
+  }
+  .rp-anim [data-revealed] .rp-sweep {
+    animation: rp-sweep 1600ms var(--rp-ease) 450ms both;
+  }
+}

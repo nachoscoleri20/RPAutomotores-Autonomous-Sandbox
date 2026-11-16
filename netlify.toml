@@ -1,0 +1,6 @@
+# Demo comercial Roport (Gate 4C). Netlify detecta Next.js y aprovisiona el adaptador OpenNext
+# automáticamente (sin plugin ni versión fijada). Node: se toma de .nvmrc (24.15.0).
+# Cabeceras de seguridad y X-Robots-Tag: ver next.config.ts. Más detalle en docs/06-netlify-deployment.md.
+[build]
+  command = "npm run build"
+  publish = ".next"
